@@ -1009,10 +1009,11 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function ProductReviewPage({ params }: { params: { slug: string } }) {
-  const product = allProducts.find((p) => p.slug === params.slug)
+export default async function ProductReviewPage({ params }: { params: { slug: string } | Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const product = allProducts.find((p) => p.slug === slug)
 
-  if (!product) {
+  if (!product) {   
     notFound()
   }
 
